@@ -79,11 +79,29 @@ public class Library {
     }
 
     public Book getMostExpensiveBook(List<Book> books) {
-        return null;
+        if (books.isEmpty()) {
+            return null;
+        }
+        Book mostExpensive = books.get(0);
+        for (Book book : books) {
+            if (book.getPrice() > mostExpensive.getPrice()) {
+                mostExpensive = book;
+            }
+        }
+        return mostExpensive;
     }
 
     public List<Book> getBooksWithMinPages(List<Book> books, int minPageCount) {
-        return new ArrayList<>();
+        ArrayList<Book> result = new ArrayList<>();
+        if (books.isEmpty()) {
+            return new ArrayList<>();
+        }
+        for (Book book : books) {
+            if (book.getPageCount() >= minPageCount) {
+                result.add(book);
+            }
+        }
+        return result;
     }
 
     public List<Book> findBestPairWithinBudget(List<Book> books, double budget) {
