@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -23,16 +24,44 @@ public class App {
                 System.out.println(book.getTitle());
             }
 
-            System.out.println("Average page count: " + library.getAveragePageCount(books));
 
+            System.out.println("Titles of books for avg page count: ");
+            String[] titles = scanner.nextLine().split(",");
+            ArrayList<Library.Book> selectedBooks = new ArrayList<>();
+            for (String title : titles) {
+                for (Library.Book book : books) {
+                    if (book.getTitle().equals(title.trim())) {
+                        selectedBooks.add(book);
+                        break;
+                    }
+                }
+            }
+            System.out.println("Average page count: " + library.getAveragePageCount(selectedBooks));
+
+            
             System.out.println("Max price: ");
             double maxPrice = scanner.nextDouble();
             for (Library.Book book : library.getBooksWithinPriceLimit(books, maxPrice)) {
                 System.out.println(book.getTitle() + " -> " + book.getPrice() + " Euro");
             }
 
-            Library.Book mostExpensiveBook = library.getMostExpensiveBook(books);
-            System.out.println("Most expensive book: " + (mostExpensiveBook == null ? "none" : mostExpensiveBook));
+            System.out.println("Books for most expensive: ");
+            String [] titlesForMostExpensive = scanner.nextLine().split(",");
+            ArrayList<Library.Book> selectedBooksForMostExpensive = new ArrayList<>();
+            for (String title : titlesForMostExpensive) {
+                for (Library.Book book : books) {
+                    if (book.getTitle().equals(title.trim())) {
+                        selectedBooksForMostExpensive.add(book);
+                        break;
+                    }
+                }
+            }
+            Library.Book mostExpensiveBook = library.getMostExpensiveBook(selectedBooksForMostExpensive);
+            if (mostExpensiveBook != null) {
+                System.out.println("Most expensive book: " + mostExpensiveBook.getTitle() + "(" + mostExpensiveBook.getPrice() + ") Euro");
+            } else {
+                System.out.println("No books found.");
+            }
 
             System.out.println("Min number of pages: ");
             int minPageCount = scanner.nextInt();

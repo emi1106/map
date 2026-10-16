@@ -105,6 +105,19 @@ public class Library {
     }
 
     public List<Book> findBestPairWithinBudget(List<Book> books, double budget) {
-        return new ArrayList<>();
+        ArrayList<Book> bestPair = new ArrayList<>();
+        double bestPrice = 0;
+        for (int i = 0; i < books.size(); i++) {
+            for (int j = i + 1; j < books.size(); j++) {
+                double totalPrice = books.get(i).getPrice() + books.get(j).getPrice();
+                if (totalPrice <= budget && totalPrice > bestPrice) {
+                    bestPrice = totalPrice;
+                    bestPair.clear();
+                    bestPair.add(books.get(i));
+                    bestPair.add(books.get(j));
+                }
+            }
+        }
+        return bestPair;
     }
 }
