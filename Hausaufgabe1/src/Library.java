@@ -1,37 +1,92 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class Bibliothek {
-    public ArrayList<Book> books = new ArrayList<Book>();
-    public class Book {
-        public String title;
-        public String author;
-        public int price;
-        public int pageCount;
-    }
-    public void addBook(String title, String author, int price, int pageCount) {
-        Book book = new Book();
-        book.title = title;
-        book.author = author;
-        book.price = price;
-        book.pageCount = pageCount;
-        books.add(book);
-    }
-    public void printBooksByAuthor(String author) {
-        for (Book book : books) {
-            if (book.author.equals(author)) {
-                System.out.println(book.title);
-            }
+public class Library {
+    public static class Book {
+        private final String title;
+        private final String author;
+        private final double price;
+        private final int pageCount;
+
+        public Book(String title, String author, double price, int pageCount) {
+            this.title = title;
+            this.author = author;
+            this.price = price;
+            this.pageCount = pageCount;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public int getPageCount() {
+            return pageCount;
+        }
+
+        @Override
+        public String toString() {
+            return title + " (" + price + " Euro)";
         }
     }
-    public float getAveragePageCount(ArrayList<String> bookTitles) {
-        return 0;
+
+    private final List<Book> books = new ArrayList<>();
+
+    public void addBook(Book book) {
+        books.add(book);
     }
-    public void printBooksWithinPriceLimit(int maxPrice) {
+
+    public List<Book> getBooks() {
+        return new ArrayList<>(books);
     }
-    public void printMostExpensiveBook() {
+
+    public List<Book> getBooksByAuthor(String author) {
+        List<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getAuthor().equals(author)) {
+                result.add(book);
+            }
+        }
+        return result;
     }
-    public void printBooksWithMinPages(int minPageCount) {
+
+    public double getAveragePageCount(List<Book> books) {
+        if (books.isEmpty()) {
+            return 0;
+        }
+        int sum = 0;
+        for (Book book : books) {
+            sum += book.getPageCount();
+        }
+        return (double) sum / books.size();
     }
-    public void printBookPairsWithinBudget(int budget) {
+
+    public List<Book> getBooksWithinPriceLimit(List<Book> books, double maxPrice) {
+        ArrayList<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getPrice() <= maxPrice) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public Book getMostExpensiveBook(List<Book> books) {
+        return null;
+    }
+
+    public List<Book> getBooksWithMinPages(List<Book> books, int minPageCount) {
+        return new ArrayList<>();
+    }
+
+    public List<Book> findBestPairWithinBudget(List<Book> books, double budget) {
+        return new ArrayList<>();
     }
 }
