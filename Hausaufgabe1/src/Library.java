@@ -2,41 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    public static class Book {
-        private final String title;
-        private final String author;
-        private final double price;
-        private final int pageCount;
-
-        public Book(String title, String author, double price, int pageCount) {
-            this.title = title;
-            this.author = author;
-            this.price = price;
-            this.pageCount = pageCount;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public int getPageCount() {
-            return pageCount;
-        }
-
-        @Override
-        public String toString() {
-            return title + " (" + price + " Euro)";
-        }
-    }
-
     private final List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
@@ -52,6 +17,19 @@ public class Library {
         for (Book book : books) {
             if (book.getAuthor().equals(author)) {
                 result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public List<Book> findBooksByTitles(String commaSeparatedTitles) {
+        List<Book> result = new ArrayList<>();
+        for (String title : commaSeparatedTitles.split(",")) {
+            for (Book book : books) {
+                if (book.getTitle().equals(title.trim())) {
+                    result.add(book);
+                    break;
+                }
             }
         }
         return result;
@@ -93,9 +71,6 @@ public class Library {
 
     public List<Book> getBooksWithMinPages(List<Book> books, int minPageCount) {
         ArrayList<Book> result = new ArrayList<>();
-        if (books.isEmpty()) {
-            return new ArrayList<>();
-        }
         for (Book book : books) {
             if (book.getPageCount() >= minPageCount) {
                 result.add(book);
